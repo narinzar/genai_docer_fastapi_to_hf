@@ -1,59 +1,67 @@
-# Text Generation API
+# FastAPI Text Generation with FLAN-T5
 
 A simple FastAPI application that uses Hugging Face's `google/flan-t5-small` model for text generation.
 
-## Features
+## Project Structure
 
-- REST API built with FastAPI
-- Text generation using the FLAN-T5 Small model
-- Dockerized application for easy deployment
-- Optimized for cloud deployment (including Hugging Face Spaces)
+- `app.py` - The FastAPI application
+- `Dockerfile` - Docker configuration for containerization
+- `requirements.txt` - Python dependencies
+- `push.py` - Simple script for pushing code to GitHub or Hugging Face
 
-## Requirements
+## Setup Instructions
 
-- Python 3.9+
-- Docker (optional, for containerized deployment)
-- Dependencies listed in `requirements.txt`
+### Prerequisites
 
-## Installation
+1. Create your repositories manually before using these scripts:
+   - Create a GitHub repository at: https://github.com/new
+   - Create a Hugging Face Space at: https://huggingface.co/spaces/new
+     - Select "Docker" as the SDK
 
-### Local Setup
-
-1. Clone the repository:
+2. Install Python requirements:
    ```bash
-   git clone https://github.com/yourusername/text-generation-api.git
-   cd text-generation-api
+   pip install GitPython python-dotenv requests
    ```
 
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+3. Create a `.env` file with your credentials:
+   ```
+   # GitHub Configuration
+   GITHUB_USERNAME=your_github_username
+   GITHUB_TOKEN=your_github_personal_access_token
+   REPO_NAME=your_repository_name
+   
+   # Hugging Face Configuration
+   HF_USERNAME=your_huggingface_username
+   HF_TOKEN=your_huggingface_token
+   HF_SPACE_NAME=your_space_name
    ```
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Using the Push Script
 
-4. Run the application:
-   ```bash
-   uvicorn app:app --host 0.0.0.0 --port 7860 --reload
-   ```
+This repository includes a simple script (`push.py`) that makes it easy to push your code to GitHub or Hugging Face.
 
-### Docker Setup
+#### Push to GitHub
 
-1. Build the Docker image:
-   ```bash
-   docker build -t text-generation-api .
-   ```
+```bash
+python push.py github
+```
 
-2. Run the container:
-   ```bash
-   docker run -p 7860:7860 text-generation-api
-   ```
+#### Push to Hugging Face Space
+
+```bash
+python push.py hf
+```
+
+#### Force Push (if needed)
+
+```bash
+python push.py github --force
+python push.py hf --force
+```
 
 ## API Usage
+
+Once deployed, the API provides two endpoints:
 
 ### Home Endpoint
 
@@ -75,7 +83,7 @@ Parameters:
 Returns:
 - JSON object with the generated text in the `output` field
 
-## Examples
+## Example
 
 ### Example Request
 
@@ -91,70 +99,6 @@ curl -X GET "http://localhost:7860/generate?text=Explain%20quantum%20computing"
 }
 ```
 
-## Deployment
-
-This project is automatically deployed to Hugging Face Spaces using GitHub Actions.
-
-- GitHub Repository: [https://github.com/yourusername/text-generation-api](https://github.com/yourusername/text-generation-api)
-- Hugging Face Space: [https://huggingface.co/spaces/narinzar/genai_docer_fastapi_to_hf](https://huggingface.co/spaces/narinzar/genai_docer_fastapi_to_hf)
-
-### Automatic Deployment
-
-When you push changes to the `main` branch of the GitHub repository, GitHub Actions automatically deploys the updates to the Hugging Face Space.
-
-To manually trigger a deployment, go to the Actions tab in the GitHub repository and run the "Sync to Hugging Face Space" workflow.
-
-### Setup Instructions
-
-To set up automated deployments for your own project:
-
-1. Create a `.env` file with your GitHub and Hugging Face credentials (see `.env.example`)
-2. Run the deployment script:
-   ```bash
-   python deployment_script.py --create-github --push
-   ```
-3. Add the `HF_TOKEN` secret to your GitHub repository:
-   - Go to your repository settings → Secrets → Actions
-   - Add a new repository secret with name 'HF_TOKEN' and your Hugging Face token as the value
-
 ## License
 
-[MIT License](LICENSE)
-
-## Acknowledgements
-
-- This project uses the [FLAN-T5 Small model](https://huggingface.co/google/flan-t5-small) developed by Google
-- Built with [FastAPI](https://fastapi.tiangolo.com/) and [Transformers](https://huggingface.co/docs/transformers/index)
-## GitHub Repository
-
-This project is hosted on GitHub:
-
-- Repository: [https://github.com/narinzar/genai_docer_fastapi_to_hf](https://github.com/narinzar/genai_docer_fastapi_to_hf)
-
-### Development
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/narinzar/genai_docer_fastapi_to_hf.git
-   cd genai_docer_fastapi_to_hf
-   ```
-
-2. Set up a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Make your changes and push them to GitHub:
-   ```bash
-   git add .
-   git commit -m "Your commit message"
-   git push origin main
-   ```
-
-Last updated: 2025-04-01 09:17:51
+MIT License
